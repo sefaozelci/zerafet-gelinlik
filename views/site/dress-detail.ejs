@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= dress.name %> | <%= settings.seo_title || settings.site_name %></title>
+    <meta name="description" content="<%= dress.description %>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css">
+    <style>
+        :root {
+            --primary: <%= settings.primary_color || '#c9a96e' %>;
+            --primary-light: <%= settings.primary_color || '#c9a96e' %>cc;
+            --text-color: <%= settings.text_color || '#1a1513' %>;
+        }
+        body { color: var(--text-color); }
+    </style>
+</head>
+<body>
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav id="navbar" class="navbar scrolled">
+        <div class="navbar__container container">
+            <a href="/" class="navbar__logo" style="color: var(--clr-primary);">
+                <%= settings.site_name %>
+            </a>
+            <ul class="navbar__menu" id="navMenu">
+                <li><a href="/#ana-sayfa" class="navbar__link">Ana Sayfa</a></li>
+                <li><a href="/#koleksiyonlar" class="navbar__link">Koleksiyonlar</a></li>
+                <li><a href="/#hakkimizda" class="navbar__link">Hakkımızda</a></li>
+                <li><a href="/#iletisim" class="navbar__link">İletişim</a></li>
+            </ul>
+            <a href="#randevu-al" class="navbar__cta btn btn--primary btn--sm">Randevu Al</a>
+            <button class="navbar__toggle" id="navToggle" aria-label="Menüyü aç">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ DRESS DETAIL ============ -->
+    <section class="dress-detail section" style="padding-top: 140px;">
+        <div class="container">
+            <div class="dress-detail__grid">
+                
+                <!-- Galeri -->
+                <div class="dress-detail__gallery">
+                    <div class="dress-detail__main-image" style="cursor: zoom-in;" onclick="openLightbox()">
+                        <img id="mainImage" src="<%= dress.images && dress.images.length > 0 ? dress.images[0] : dress.image %>" alt="<%= dress.name %>">
+                        <% if (dress.tag) { %>
+                            <span class="dress-detail__tag"><%= dress.tag %></span>
+                        <% } %>
+                    </div>
+                    <% if (dress.images && dress.images.length > 1) { %>
+                        <div class="dress-detail__thumbnails">
+                            <% dress.images.forEach(function(img, idx) { %>
+                                <div class="dress-detail__thumb <%= idx === 0 ? 'active' : '' %>" onclick="changeMainImage('<%= img %>', this)">
+                                    <img src="<%= img %>" alt="<%= dress.name %> thumbnail">
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Bilgiler -->
+                <div class="dress-detail__info">
+                    <span class="dress-detail__category"><%= dress.category_name %></span>
+                    <h1 class="dress-detail__title"><%= dress.name %></h1>
+                    <div class="dress-detail__price"><%= dress.price_text %></div>
+                    
+                    <div class="dress-detail__description">
+                        <p><%= dress.description %></p>
+                    </div>
+
+                    <div class="dress-detail__perks">
+                        <div class="perk-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Kişiye özel ölçü ile dikim imkanı
+                        </div>
+                        <div class="perk-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Ücretsiz prova hizmeti
+                        </div>
+                    </div>
+
+                    <div class="dress-detail__actions" id="randevu-al">
+                        <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">Bu Gelinlik İçin Randevu Al</h3>
+                        <form id="appointmentForm" class="appointment__form" novalidate style="background: transparent; padding: 0;">
+                            <div class="form-group">
+                                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Adınız ve soyadınız *" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="email" id="email" name="email" class="form-input" placeholder="E-posta *" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="Telefon *" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="appointmentDate" style="display: block; font-size: 0.85rem; color: var(--clr-text-muted); margin-bottom: 6px;">Randevu Tarihi *</label>
+                                    <input type="date" id="appointmentDate" name="appointmentDate" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weddingDate" style="display: block; font-size: 0.85rem; color: var(--clr-text-muted); margin-bottom: 6px;">Düğün Tarihi (İsteğe Bağlı)</label>
+                                    <input type="date" id="weddingDate" name="weddingDate" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none;">
+                                <input type="text" id="service" name="service" value="gelinlik">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" class="form-input form-textarea" rows="2">Merhaba, "<%= dress.name %>" modeli için randevu almak istiyorum.</textarea>
+                            </div>
+                            <button type="submit" id="appointmentBtn" class="btn btn--primary btn--block">Randevu Talebi Gönder</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ RELATED DRESSES ============ -->
+    <% if (relatedDresses && relatedDresses.length > 0) { %>
+    <section class="section" style="background-color: #faf8f5;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-header__tag">— Öneriler —</span>
+                <h2 class="section-header__title">Bunlar Da İlginizi Çekebilir</h2>
+            </div>
+            <div class="collections__grid">
+                <% relatedDresses.forEach(function(d) { %>
+                    <div class="dress-card">
+                        <div class="dress-card__image">
+                            <img src="<%= d.image %>" alt="<%= d.name %>" loading="lazy">
+                            <% if (d.tag) { %>
+                                <span class="dress-card__tag"><%= d.tag %></span>
+                            <% } %>
+                            <div class="dress-card__overlay">
+                                <a href="/gelinlik/<%= d.id %>" class="dress-card__action" aria-label="Detay">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="dress-card__info">
+                            <h3 class="dress-card__name"><%= d.name %></h3>
+                            <div class="dress-card__footer">
+                                <span class="dress-card__category"><%= d.category_name %></span>
+                                <span class="dress-card__price"><%= d.price_text %></span>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+    <% } %>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__bottom" style="border-top: none; padding-top: 2rem; text-align: center;">
+                <p>&copy; <%= new Date().getFullYear() %> <%= settings.site_name %>. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ SOCIAL FLOATS ============ -->
+    <div class="social-floats">
+        <% if (settings.instagram) { %>
+        <a href="https://instagram.com/<%= settings.instagram %>" target="_blank" rel="noopener noreferrer" class="social-float instagram-float" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <% } %>
+        <% if (settings.whatsapp) { %>
+        <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener noreferrer" class="social-float whatsapp-float" aria-label="WhatsApp">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+        <% } %>
+    </div>
+    
+    <!-- ============ MOBILE CALL FLOAT ============ -->
+    <% if (settings.phone) { %>
+    <a href="tel:<%= settings.phone %>" class="mobile-call-float" aria-label="Hemen Ara">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Hemen Ara
+    </a>
+    <% } %>
+
+    <!-- ============ LIGHTBOX ============ -->
+    <div id="imageLightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox__close" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox__content" id="lightboxImg">
+    </div>
+
+    <script src="/js/site.js"></script>
+    <script>
+        function changeMainImage(src, element) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.dress-detail__thumb').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+        
+        function openLightbox() {
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const mainImg = document.getElementById('mainImage');
+            
+            lightboxImg.src = mainImg.src;
+            lightbox.style.display = 'block';
+        }
+        
+        function closeLightbox() {
+            document.getElementById('imageLightbox').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<style>
+.section-box {
+    background: #fff;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.section-box h4 {
+    margin-top: 0;
+    color: var(--clr-primary);
+    border-bottom: 1px solid var(--clr-border);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.section-box h4::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: var(--clr-primary);
+    border-radius: 2px;
+}
+</style>
+<div class="card fade-in">
+    <div class="card-header">
+        <h3 class="card-title">İçerik & Reklam Yönetimi</h3>
+    </div>
+    <div class="card-body">
+        <form action="/admin/content" method="POST" class="settings-form">
+            
+            <div class="section-box">
+                <h4>Duyuru / Reklam Çubuğu</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Duyuru Alanı Durumu</label>
+                        <select name="announcement_active" class="form-input">
+                            <option value="1" <%= settings.announcement_active === '1' ? 'selected' : '' %>>Açık (Gösterilsin)</option>
+                            <option value="0" <%= settings.announcement_active !== '1' ? 'selected' : '' %>>Kapalı (Gizlensin)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Duyuru Metni</label>
+                        <input type="text" name="announcement_text" class="form-input" value="<%= settings.announcement_text || '' %>" placeholder="Örn: Yaz İndirimi Başladı!">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Yönlendirme Linki (İsteğe Bağlı)</label>
+                        <input type="text" name="announcement_link" class="form-input" value="<%= settings.announcement_link || '' %>" placeholder="Örn: /randevu veya #koleksiyonlar">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>Koleksiyonlar Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_collections_tag" class="form-input" value="<%= settings.section_collections_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık</label>
+                        <input type="text" name="section_collections_title" class="form-input" value="<%= settings.section_collections_title || '' %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="section_collections_desc" class="form-input" rows="2"><%= settings.section_collections_desc || '' %></textarea>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>Hakkımızda Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_about_tag" class="form-input" value="<%= settings.section_about_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık (Satır atlamak için &lt;br&gt; kullanın)</label>
+                        <input type="text" name="section_about_title" class="form-input" value="<%= settings.section_about_title || '' %>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>Hizmetlerimiz Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_services_tag" class="form-input" value="<%= settings.section_services_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık</label>
+                        <input type="text" name="section_services_title" class="form-input" value="<%= settings.section_services_title || '' %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="section_services_desc" class="form-input" rows="2"><%= settings.section_services_desc || '' %></textarea>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>Yorumlar Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_testimonials_tag" class="form-input" value="<%= settings.section_testimonials_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık</label>
+                        <input type="text" name="section_testimonials_title" class="form-input" value="<%= settings.section_testimonials_title || '' %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="section_testimonials_desc" class="form-input" rows="2"><%= settings.section_testimonials_desc || '' %></textarea>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>Randevu Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_appointment_tag" class="form-input" value="<%= settings.section_appointment_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık (Satır atlamak için &lt;br&gt; kullanın)</label>
+                        <input type="text" name="section_appointment_title" class="form-input" value="<%= settings.section_appointment_title || '' %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="section_appointment_desc" class="form-input" rows="2"><%= settings.section_appointment_desc || '' %></textarea>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>İletişim Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_contact_tag" class="form-input" value="<%= settings.section_contact_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık</label>
+                        <input type="text" name="section_contact_title" class="form-input" value="<%= settings.section_contact_title || '' %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="section_contact_desc" class="form-input" rows="2"><%= settings.section_contact_desc || '' %></textarea>
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h4>Instagram Alanı</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Üst Etiket</label>
+                        <input type="text" name="section_instagram_tag" class="form-input" value="<%= settings.section_instagram_tag || '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ana Başlık</label>
+                        <input type="text" name="section_instagram_title" class="form-input" value="<%= settings.section_instagram_title || '' %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea name="section_instagram_desc" class="form-input" rows="2"><%= settings.section_instagram_desc || '' %></textarea>
+                </div>
+            </div>
+            
+            <div class="section-box">
+                <h4>Alt Bilgi (Footer)</h4>
+                <div class="form-group">
+                    <label class="form-label">Footer Açıklaması</label>
+                    <textarea name="footer_desc" class="form-input" rows="3"><%= settings.footer_desc || '' %></textarea>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 30px;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">Değişiklikleri Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>

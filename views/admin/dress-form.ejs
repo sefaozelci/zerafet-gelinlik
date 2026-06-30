@@ -1,0 +1,114 @@
+<div class="card">
+    <div class="card-header d-flex justify-between align-center">
+        <h2 class="card-title"><%= isEdit ? 'Gelinliği Düzenle' : 'Yeni Gelinlik Ekle' %></h2>
+        <a href="/admin/dresses" class="btn btn-outline-sm">İptal / Geri Dön</a>
+    </div>
+    
+    <div class="card-body">
+        <form action="<%= isEdit ? '/admin/dresses/edit/' + dress.id : '/admin/dresses/new' %>" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-row">
+                <!-- Sol Kolon: Resim -->
+                <div>
+                    <div class="form-group">
+                        <label class="form-label">Gelinlik Görseli (3:4 Dikey Format Önerilir)</label>
+                        <div class="image-preview-wrapper" style="max-width: 300px;">
+                            <% if (isEdit && dress.images && dress.images.length > 0) { %>
+                                <div class="gallery-preview">
+                                    <% dress.images.forEach(img => { %>
+                                        <img src="<%= img %>" alt="Önizleme" class="image-preview" style="width:60px; height:80px; display:inline-block; margin-right:5px; object-fit:cover; border-radius:4px;">
+                                    <% }) %>
+                                </div>
+                            <% } else if (isEdit && dress.image) { %>
+                                <img src="<%= dress.image %>" alt="Önizleme" class="image-preview" id="previewImg">
+                            <% } else { %>
+                                <img src="" alt="Önizleme yok" class="image-preview" id="previewImg" style="display: none;">
+                                <p class="text-muted" id="noImgText">Lütfen görsel(ler) seçin</p>
+                            <% } %>
+                        </div>
+                        
+                        <input type="file" class="form-control mt-sm" id="images" name="images" accept="image/*" multiple onchange="previewFile(this)" <%= !isEdit ? 'required' : '' %>>
+                        <% if (isEdit) { %>
+                            <small class="form-text">Mevcut görseli değiştirmek istemiyorsanız boş bırakın.</small>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Sağ Kolon: Bilgiler -->
+                <div>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Model Adı *</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<%= isEdit ? dress.name : '' %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category_id" class="form-label">Kategori *</label>
+                        <select class="form-control" id="category_id" name="category_id" required>
+                            <option value="" disabled <%= !isEdit ? 'selected' : '' %>>Kategori Seçin</option>
+                            <% categories.forEach(cat => { %>
+                                <option value="<%= cat.id %>" <%= isEdit && dress.category_id === cat.id ? 'selected' : '' %>>
+                                    <%= cat.name %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price_text" class="form-label">Fiyat Bilgisi</label>
+                        <input type="text" class="form-control" id="price_text" name="price_text" value="<%= isEdit ? dress.price_text : '' %>" placeholder="Örn: ₺45.000'den başlayan">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tag" class="form-label">Etiket (Badge)</label>
+                        <input type="text" class="form-control" id="tag" name="tag" value="<%= isEdit ? dress.tag : '' %>" placeholder="Örn: Yeni, Popüler, Özel, Trend">
+                        <small class="form-text">Boş bırakırsanız etiket görünmez.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort_order" class="form-label">Sıralama</label>
+                        <input type="number" class="form-control" id="sort_order" name="sort_order" value="<%= isEdit ? dress.sort_order : 0 %>">
+                        <small class="form-text">Küçük sayı olanlar önce listelenir.</small>
+                    </div>
+
+                    <div class="form-group mt-md">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" name="is_active" value="1" <%= (!isEdit || (isEdit && dress.is_active)) ? 'checked' : '' %>>
+                            <span>Sitede Yayınla (Aktif)</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-md">
+                <label for="description" class="form-label">Açıklama / Detaylar</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Örn: Prenses Model · Dantel Detay"><%= isEdit ? dress.description : '' %></textarea>
+            </div>
+
+            <div class="mt-md pt-sm" style="border-top: 1px solid var(--clr-border);">
+                <button type="submit" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    <%= isEdit ? 'Gelinliği Güncelle' : 'Gelinliği Kaydet' %>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function previewFile(input) {
+    const preview = document.getElementById('previewImg');
+    const noImgText = document.getElementById('noImgText');
+    const files = input.files;
+    
+    // Basit önizleme (Sadece ilk dosya)
+    if (files && files[0] && preview) {
+        const reader = new FileReader();
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+            if (noImgText) noImgText.style.display = 'none';
+        }
+        reader.readAsDataURL(files[0]);
+    }
+}
+</script>

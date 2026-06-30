@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap | Zerafet Yönetim Paneli</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+    <style>
+        body {
+            background-color: var(--clr-bg);
+            background-image: radial-gradient(circle at top right, var(--clr-primary-subtle) 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, var(--clr-primary-subtle) 0%, transparent 40%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--sp-md);
+        }
+        .login-card {
+            background: var(--clr-surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--sp-xl);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid var(--clr-border);
+        }
+        .login-logo {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--clr-text);
+            margin-bottom: 0.5rem;
+        }
+        .login-logo .logo-accent {
+            color: var(--clr-primary);
+            font-style: italic;
+        }
+        .login-subtitle {
+            color: var(--clr-text-muted);
+            font-size: var(--fs-small);
+            margin-bottom: var(--sp-lg);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .login-form .form-group {
+            text-align: left;
+            margin-bottom: var(--sp-md);
+        }
+        .login-form .btn {
+            width: 100%;
+            margin-top: var(--sp-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h1 class="login-logo" style="color: var(--clr-primary);">Zerafet</h1>
+        <p class="login-subtitle">Yönetim Paneli Girişi</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-error" style="margin-bottom: var(--sp-md); text-align: left;">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="/admin/login" method="POST" class="login-form">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" name="username" class="form-control" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+        </form>
+    </div>
+</body>
+</html>

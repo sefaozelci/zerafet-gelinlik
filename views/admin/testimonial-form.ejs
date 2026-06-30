@@ -1,0 +1,90 @@
+<div class="card">
+    <div class="card-header d-flex justify-between align-center">
+        <h2 class="card-title"><%= isEdit ? 'Yorumu Düzenle' : 'Yeni Yorum Ekle' %></h2>
+        <a href="/admin/testimonials" class="btn btn-outline-sm">İptal / Geri Dön</a>
+    </div>
+    
+    <div class="card-body">
+        <form action="<%= isEdit ? '/admin/testimonials/edit/' + testimonial.id : '/admin/testimonials/new' %>" method="POST">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name" class="form-label">Müşteri Adı Soyadı *</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<%= isEdit ? testimonial.name : '' %>" required oninput="generateInitials()">
+                </div>
+                
+                <div class="form-group">
+                    <label for="initials" class="form-label">Baş Harfler * (Avar için)</label>
+                    <input type="text" class="form-control" id="initials" name="initials" value="<%= isEdit ? testimonial.initials : '' %>" required maxlength="3" style="text-transform: uppercase;">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date_text" class="form-label">Tarih Metni *</label>
+                    <input type="text" class="form-control" id="date_text" name="date_text" value="<%= isEdit ? testimonial.date_text : '' %>" placeholder="Örn: Mart 2026" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rating" class="form-label">Puan *</label>
+                    <select class="form-control" id="rating" name="rating" required>
+                        <option value="5" <%= isEdit && testimonial.rating === 5 ? 'selected' : '' %>>5 Yıldız - Mükemmel</option>
+                        <option value="4" <%= isEdit && testimonial.rating === 4 ? 'selected' : '' %>>4 Yıldız - Çok İyi</option>
+                        <option value="3" <%= isEdit && testimonial.rating === 3 ? 'selected' : '' %>>3 Yıldız - İyi</option>
+                        <option value="2" <%= isEdit && testimonial.rating === 2 ? 'selected' : '' %>>2 Yıldız - Orta</option>
+                        <option value="1" <%= isEdit && testimonial.rating === 1 ? 'selected' : '' %>>1 Yıldız - Kötü</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="text" class="form-label">Yorum Metni *</label>
+                <textarea class="form-control" id="text" name="text" rows="4" required><%= isEdit ? testimonial.text : '' %></textarea>
+                <small class="form-text">Müşterinin yorumunu buraya girin. Çok uzun tutmamaya çalışın.</small>
+            </div>
+
+            <div class="form-group mt-md">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" name="is_active" value="1" <%= (!isEdit || (isEdit && testimonial.is_active)) ? 'checked' : '' %>>
+                    <span>Sitede Yayınla (Aktif)</span>
+                </label>
+            </div>
+
+            <div class="mt-md pt-sm" style="border-top: 1px solid var(--clr-border);">
+                <button type="submit" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    <%= isEdit ? 'Yorumu Güncelle' : 'Yorumu Kaydet' %>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Auto generate initials from name
+function generateInitials() {
+    const nameInput = document.getElementById('name');
+    const initialsInput = document.getElementById('initials');
+    
+    // Only auto-generate if initials is empty or user is typing the first time
+    if (!initialsInput.value || initialsInput.dataset.auto === "true") {
+        initialsInput.dataset.auto = "true";
+        
+        const words = nameInput.value.trim().split(/\s+/);
+        let initials = '';
+        
+        if (words.length > 0 && words[0]) {
+            initials += words[0][0];
+            if (words.length > 1 && words[words.length - 1]) {
+                initials += words[words.length - 1][0];
+            }
+        }
+        
+        initialsInput.value = initials.toUpperCase();
+    }
+}
+
+document.getElementById('initials').addEventListener('input', function() {
+    this.dataset.auto = "false";
+});
+</script>

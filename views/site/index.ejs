@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.seo_title || settings.site_name %></title>
+    <meta name="description" content="<%= settings.seo_description || '' %>">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="<%= settings.seo_title || settings.site_name %>">
+    <meta property="og:description" content="<%= settings.seo_description || '' %>">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/site.css">
+    <style>
+        :root {
+            --primary: <%= settings.primary_color || '#c9a96e' %>;
+            --primary-light: <%= settings.primary_color || '#c9a96e' %>cc;
+            --text-color: <%= settings.text_color || '#1a1513' %>;
+            --bg-color: <%= settings.bg_color || '#faf8f5' %>;
+        }
+    </style>
+</head>
+<body>
+    <% if (settings.announcement_active === '1') { %>
+    <div class="announcement-bar">
+        <%= settings.announcement_text %>
+        <a href="<%= settings.announcement_link || '#randevu' %>" class="btn btn--primary" style="padding: 4px 12px; font-size: 0.8rem; margin-left: 15px; border-radius: 4px; border:none; text-decoration: none;">İncele</a>
+    </div>
+    <% } %>
+
+    <!-- ============ PRELOADER ============ -->
+    <div id="preloader" class="preloader">
+        <div class="preloader__inner">
+            <div class="preloader__ring"></div>
+            <span class="preloader__text"><%= settings.site_name %></span>
+        </div>
+    </div>
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav id="navbar" class="navbar">
+        <div class="navbar__container container">
+            <a href="#ana-sayfa" class="navbar__logo" style="color: var(--clr-primary);">
+                <%= settings.site_name %>
+            </a>
+            <ul class="navbar__menu" id="navMenu">
+                <li><a href="#ana-sayfa" class="navbar__link active">Ana Sayfa</a></li>
+                <li><a href="#koleksiyonlar" class="navbar__link">Koleksiyonlar</a></li>
+                <li><a href="#hakkimizda" class="navbar__link">Hakkımızda</a></li>
+                <li><a href="#hizmetler" class="navbar__link">Hizmetler</a></li>
+                <li><a href="#yorumlar" class="navbar__link">Yorumlar</a></li>
+                <li><a href="#iletisim" class="navbar__link">İletişim</a></li>
+            </ul>
+            <a href="#randevu" class="navbar__cta btn btn--primary btn--sm">Randevu Al</a>
+            <button class="navbar__toggle" id="navToggle" aria-label="Menüyü aç">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="ana-sayfa" class="hero">
+        <div class="hero__bg" style="background-image: url('<%= hero.bg_image %>')"></div>
+        <div class="hero__overlay"></div>
+        <div class="hero__content container">
+            <div class="hero__text">
+                <span class="hero__badge" data-animate="fade-down">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <%= hero.badge_text %>
+                </span>
+                <h1 class="hero__title" data-animate="fade-up"><%- hero.title %></h1>
+                <p class="hero__subtitle" data-animate="fade-up" data-delay="200"><%= hero.subtitle %></p>
+                <div class="hero__actions" data-animate="fade-up" data-delay="400">
+                    <a href="#koleksiyonlar" class="btn btn--primary btn--lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        Koleksiyonu Keşfet
+                    </a>
+                    <a href="#randevu" class="btn btn--outline btn--lg">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Randevu Al
+                    </a>
+                </div>
+            </div>
+            <div class="hero__stats" data-animate="fade-left" data-delay="600">
+                <div class="hero__stat">
+                    <span class="hero__stat-number" data-count="<%= hero.stat1_number %>">0</span>
+                    <span class="hero__stat-label"><%= hero.stat1_label %></span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-number" data-count="<%= hero.stat2_number %>">0</span>
+                    <span class="hero__stat-label"><%= hero.stat2_label %></span>
+                </div>
+                <div class="hero__stat">
+                    <span class="hero__stat-number" data-count="<%= hero.stat3_number %>">0</span>
+                    <span class="hero__stat-label"><%= hero.stat3_label %></span>
+                </div>
+            </div>
+        </div>
+        <div class="hero__scroll">
+            <span>Aşağı Kaydır</span>
+            <div class="hero__scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ============ COLLECTIONS SECTION ============ -->
+    <section id="koleksiyonlar" class="collections section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-header__tag"><%= settings.section_collections_tag %></span>
+                <h2 class="section-header__title"><%- settings.section_collections_title %></h2>
+                <p class="section-header__desc"><%= settings.section_collections_desc %></p>
+            </div>
+            <div class="collections__filters" data-animate="fade-up" data-delay="200">
+                <button class="filter-btn active" data-filter="all">Tümü</button>
+                <% categories.forEach(function(cat) { %>
+                    <button class="filter-btn" data-filter="<%= cat.slug %>"><%= cat.name %></button>
+                <% }); %>
+            </div>
+            <div class="collections__grid">
+                <% dresses.forEach(function(dress, index) { %>
+                    <div class="dress-card" data-category="<%= (categories.find(c => c.name === dress.category_name) || {}).slug || 'all' %>" data-animate="fade-up" data-delay="<%= index * 100 %>">
+                        <div class="dress-card__image">
+                            <img src="<%= dress.image %>" alt="<%= dress.name %>" loading="lazy">
+                            <% if (dress.tag) { %>
+                                <span class="dress-card__tag"><%= dress.tag %></span>
+                            <% } %>
+                            <div class="dress-card__overlay">
+                                <a href="/gelinlik/<%= dress.id %>" class="dress-card__action" aria-label="Detay">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="dress-card__info">
+                            <h3 class="dress-card__name"><%= dress.name %></h3>
+                            <div class="dress-card__footer">
+                                <span class="dress-card__category"><%= dress.category_name %></span>
+                                <span class="dress-card__price"><%= dress.price_text %></span>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT SECTION ============ -->
+    <section id="hakkimizda" class="about section">
+        <div class="container">
+            <div class="about__grid">
+                <div class="about__image-wrap" data-animate="fade-right">
+                    <img src="<%= about.image || hero.bg_image %>" alt="Hakkımızda" class="about__image" loading="lazy">
+                </div>
+                <div class="about__content" data-animate="fade-left">
+                    <div class="section-header section-header--left">
+                        <span class="section-header__tag"><%= settings.section_about_tag %></span>
+                        <h2 class="section-header__title"><%- settings.section_about_title %></h2>
+                    </div>
+                    <p class="about__text"><%= about.text1 %></p>
+                    <p class="about__text"><%= about.text2 %></p>
+                    <div class="about__features">
+                        <% aboutFeatures.forEach(function(feat) { %>
+                            <div class="about__feature">
+                                <div class="about__feature-icon">
+                                    <% if (feat.icon === 'heart') { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                    <% } else if (feat.icon === 'star') { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                    <% } else if (feat.icon === 'tool') { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                                    <% } else if (feat.icon === 'smile') { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                                    <% } else if (feat.icon === 'gift') { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                                    <% } else if (feat.icon === 'image') { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                    <% } else { %>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                    <% } %>
+                                </div>
+                                <div class="about__feature-content">
+                                    <h4 class="about__feature-title"><%= feat.title %></h4>
+                                    <p class="about__feature-desc"><%= feat.description %></p>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SERVICES SECTION ============ -->
+    <section id="hizmetler" class="services section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-header__tag"><%= settings.section_services_tag %></span>
+                <h2 class="section-header__title"><%- settings.section_services_title %></h2>
+                <p class="section-header__desc"><%= settings.section_services_desc %></p>
+            </div>
+            <div class="services__grid">
+                <% services.forEach(function(service, index) { %>
+                    <div class="service-card<%= service.is_featured ? ' service-card--featured' : '' %>" data-animate="fade-up" data-delay="<%= index * 150 %>">
+                        <% if (service.is_featured) { %>
+                            <span class="service-card__popular">En Popüler</span>
+                        <% } %>
+                        <div class="service-card__icon">
+                            <% if (service.icon === 'heart') { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            <% } else if (service.icon === 'tool') { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                            <% } else if (service.icon === 'smile') { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                            <% } else if (service.icon === 'image') { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            <% } else if (service.icon === 'star') { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <% } else if (service.icon === 'gift') { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                            <% } else { %>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            <% } %>
+                        </div>
+                        <h3 class="service-card__title"><%= service.title %></h3>
+                        <p class="service-card__desc"><%= service.description %></p>
+                        <ul class="service-card__features">
+                            <% var features = []; try { features = JSON.parse(service.features); } catch(e) {} %>
+                            <% features.forEach(function(f) { %>
+                                <li class="service-card__feature">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <%= f %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                        <a href="#randevu" class="btn <%= service.is_featured ? 'btn--primary' : 'btn--outline' %> btn--block">Randevu Al</a>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ MARQUEE SECTION ============ -->
+    <section class="marquee">
+        <div class="marquee__track">
+            <div class="marquee__content">
+                <% categories.forEach(function(cat) { %>
+                    <span class="marquee__item"><%= cat.name %></span>
+                    <span class="marquee__separator">✦</span>
+                <% }); %>
+                <% categories.forEach(function(cat) { %>
+                    <span class="marquee__item"><%= cat.name %></span>
+                    <span class="marquee__separator">✦</span>
+                <% }); %>
+                <% categories.forEach(function(cat) { %>
+                    <span class="marquee__item"><%= cat.name %></span>
+                    <span class="marquee__separator">✦</span>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS SECTION ============ -->
+    <section id="yorumlar" class="testimonials section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-header__tag"><%= settings.section_testimonials_tag %></span>
+                <h2 class="section-header__title"><%- settings.section_testimonials_title %></h2>
+                <p class="section-header__desc"><%= settings.section_testimonials_desc %></p>
+            </div>
+            <div class="testimonials__slider" data-animate="fade-up" data-delay="200">
+                <div class="testimonials__track">
+                    <% testimonials.forEach(function(t, index) { %>
+                        <div class="testimonial-card<%= index === 0 ? ' active' : '' %>">
+                            <div class="testimonial-card__stars">
+                                <% for (var s = 0; s < 5; s++) { %>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="<%= s < t.rating ? 'currentColor' : 'none' %>" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                <% } %>
+                            </div>
+                            <p class="testimonial-card__text">"<%= t.text %>"</p>
+                            <div class="testimonial-card__author">
+                                <div class="testimonial-card__avatar"><%= t.initials %></div>
+                                <div class="testimonial-card__info">
+                                    <h4 class="testimonial-card__name"><%= t.name %></h4>
+                                    <span class="testimonial-card__date"><%= t.date_text %></span>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+                <div class="testimonials__dots">
+                    <% testimonials.forEach(function(t, index) { %>
+                        <button class="testimonials__dot<%= index === 0 ? ' active' : '' %>" data-index="<%= index %>" aria-label="Yorum <%= index + 1 %>"></button>
+                    <% }); %>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn btn--outline" onclick="openReviewModal()">Deneyiminizi Paylaşın</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ APPOINTMENT SECTION ============ -->
+    <section id="randevu" class="appointment section">
+        <div class="container">
+            <div class="appointment__grid">
+                <div class="appointment__info" data-animate="fade-right">
+                    <div class="section-header section-header--left">
+                        <span class="section-header__tag"><%= settings.section_appointment_tag %></span>
+                        <h2 class="section-header__title"><%- settings.section_appointment_title %></h2>
+                    </div>
+                    <p class="appointment__desc"><%= settings.section_appointment_desc %></p>
+                    <ul class="appointment__perks">
+                        <li class="appointment__perk">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Ücretsiz danışmanlık hizmeti
+                        </li>
+                        <li class="appointment__perk">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Özel prova odası
+                        </li>
+                        <li class="appointment__perk">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Kişiye özel stil danışmanlığı
+                        </li>
+                        <li class="appointment__perk">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Aksesuar seçiminde yardım
+                        </li>
+                        <li class="appointment__perk">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Esnek ödeme seçenekleri
+                        </li>
+                    </ul>
+                </div>
+                <div class="appointment__form-wrap" data-animate="fade-left">
+                    <form id="appointmentForm" class="appointment__form" novalidate>
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">Ad Soyad *</label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Adınız ve soyadınız" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">E-posta *</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="ornek@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Telefon *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="05XX XXX XX XX" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointmentDate" style="display: block; font-size: 0.85rem; color: var(--clr-text-muted); margin-bottom: 6px;">Randevu Tarihi *</label>
+                                <input type="date" id="appointmentDate" name="appointmentDate" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="weddingDate" style="display: block; font-size: 0.85rem; color: var(--clr-text-muted); margin-bottom: 6px;">Düğün Tarihi (İsteğe Bağlı)</label>
+                                <input type="date" id="weddingDate" name="weddingDate" class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="service" class="form-label">Hizmet Seçin</label>
+                            <select id="service" name="service" class="form-input">
+                                <option value="">Hizmet seçin...</option>
+                                <% services.forEach(function(s) { %>
+                                    <option value="<%= s.id %>"><%= s.title %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Mesajınız</label>
+                            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Eklemek istediğiniz notlar..." rows="4"></textarea>
+                        </div>
+                        <button type="submit" id="appointmentBtn" class="btn btn--primary btn--block btn--lg">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            Randevu Oluştur
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT SECTION ============ -->
+    <section id="iletisim" class="contact section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-header__tag section-header__tag--light"><%= settings.section_contact_tag %></span>
+                <h2 class="section-header__title section-header__title--light"><%- settings.section_contact_title %></h2>
+                <p class="section-header__desc section-header__desc--light"><%= settings.section_contact_desc %></p>
+            </div>
+            <div class="contact__grid">
+                <div class="contact__card" data-animate="fade-up" data-delay="0">
+                    <div class="contact__card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h4 class="contact__card-title">Adres</h4>
+                    <p class="contact__card-text"><%= settings.address %></p>
+                </div>
+                <div class="contact__card" data-animate="fade-up" data-delay="150">
+                    <div class="contact__card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <h4 class="contact__card-title">Telefon</h4>
+                    <p class="contact__card-text">
+                        <a href="tel:<%= settings.phone %>"><%= settings.phone %></a>
+                        <% if (settings.phone2) { %>
+                            <br><a href="tel:<%= settings.phone2 %>"><%= settings.phone2 %></a>
+                        <% } %>
+                    </p>
+                </div>
+                <div class="contact__card" data-animate="fade-up" data-delay="300">
+                    <div class="contact__card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <h4 class="contact__card-title">E-posta</h4>
+                    <p class="contact__card-text">
+                        <a href="mailto:<%= settings.email %>"><%= settings.email %></a>
+                        <% if (settings.email2) { %>
+                            <br><a href="mailto:<%= settings.email2 %>"><%= settings.email2 %></a>
+                        <% } %>
+                    </p>
+                </div>
+                <div class="contact__card" data-animate="fade-up" data-delay="450">
+                    <div class="contact__card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h4 class="contact__card-title">Çalışma Saatleri</h4>
+                    <p class="contact__card-text"><%= settings.hours %></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ INSTAGRAM SECTION ============ -->
+    <section class="instagram section">
+        <div class="container">
+            <div class="section-header" data-animate="fade-up">
+                <span class="section-header__tag"><%= settings.section_instagram_tag %></span>
+                <h2 class="section-header__title"><%- settings.section_instagram_title %></h2>
+                <p class="section-header__desc"><%= settings.section_instagram_desc %></p>
+            </div>
+            <div class="instagram__grid" data-animate="fade-up" data-delay="200">
+                <% dresses.slice(0, 5).forEach(function(dress) { %>
+                    <a href="https://instagram.com/<%= settings.instagram %>" target="_blank" rel="noopener noreferrer" class="instagram__item">
+                        <img src="<%= dress.image %>" alt="<%= dress.name %>" loading="lazy">
+                        <div class="instagram__overlay">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </div>
+                    </a>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="#ana-sayfa" class="footer__logo" style="color: var(--clr-primary);">
+                        <%= settings.site_name %>
+                    </a>
+                    <p class="footer__desc"><%= settings.footer_desc %></p>
+                    <div class="footer__social">
+                        <% if (settings.instagram) { %>
+                            <a href="https://instagram.com/<%= settings.instagram %>" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                            </a>
+                        <% } %>
+                        <% if (settings.facebook) { %>
+                            <a href="https://facebook.com/<%= settings.facebook %>" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Facebook">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            </a>
+                        <% } %>
+                        <% if (settings.whatsapp) { %>
+                            <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="WhatsApp">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="footer__links">
+                    <h4 class="footer__heading">Hızlı Bağlantılar</h4>
+                    <ul class="footer__list">
+                        <li><a href="#ana-sayfa" class="footer__link">Ana Sayfa</a></li>
+                        <li><a href="#koleksiyonlar" class="footer__link">Koleksiyonlar</a></li>
+                        <li><a href="#hakkimizda" class="footer__link">Hakkımızda</a></li>
+                        <li><a href="#hizmetler" class="footer__link">Hizmetler</a></li>
+                        <li><a href="#yorumlar" class="footer__link">Yorumlar</a></li>
+                        <li><a href="#randevu" class="footer__link">Randevu Al</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4 class="footer__heading">Hizmetler</h4>
+                    <ul class="footer__list">
+                        <% services.forEach(function(s) { %>
+                            <li><a href="#hizmetler" class="footer__link"><%= s.title %></a></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="footer__contact">
+                    <h4 class="footer__heading">İletişim</h4>
+                    <ul class="footer__list">
+                        <li class="footer__contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <%= settings.address %>
+                        </li>
+                        <li class="footer__contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <a href="tel:<%= settings.phone %>"><%= settings.phone %></a>
+                        </li>
+                        <li class="footer__contact-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <a href="mailto:<%= settings.email %>"><%= settings.email %></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; <%= new Date().getFullYear() %> <%= settings.site_name %>. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ SOCIAL FLOATS ============ -->
+    <div class="social-floats">
+        <% if (settings.instagram) { %>
+        <a href="https://instagram.com/<%= settings.instagram %>" target="_blank" rel="noopener noreferrer" class="social-float instagram-float" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <% } %>
+        <% if (settings.whatsapp) { %>
+        <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener noreferrer" class="social-float whatsapp-float" aria-label="WhatsApp">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </a>
+        <% } %>
+    </div>
+    
+    <!-- ============ MOBILE CALL FLOAT ============ -->
+    <% if (settings.phone) { %>
+    <a href="tel:<%= settings.phone %>" class="mobile-call-float" aria-label="Hemen Ara">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Hemen Ara
+    </a>
+    <% } %>
+
+    <!-- ============ REVIEW MODAL ============ -->
+    <div id="reviewModal" class="review-modal-overlay">
+        <div class="review-modal">
+            <div class="review-modal__header">
+                <div>
+                    <h3 class="review-modal__title">Deneyiminizi Paylaşın</h3>
+                    <p class="review-modal__desc" style="padding:0; margin:5px 0 0 0;">Yorumlarınız bizim için çok değerli.</p>
+                </div>
+                <button class="review-modal__close" onclick="closeReviewModal()">&times;</button>
+            </div>
+            <div class="review-modal__body">
+                <form id="reviewForm" class="appointment__form">
+                    <div id="reviewAlertMessage" class="alert mb-md" style="display: none;"></div>
+                    <div class="form-group">
+                        <label for="reviewName" class="form-label" style="display:block; margin-bottom:5px;">Ad Soyad *</label>
+                        <input type="text" id="reviewName" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="form-label" style="display:block; margin-bottom:10px;">Puanınız *</label>
+                        <div class="star-rating-wrapper">
+                            <input type="radio" id="star5" name="rating" value="5" checked />
+                            <label for="star5" title="5 Yıldız">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </label>
+                            <input type="radio" id="star4" name="rating" value="4" />
+                            <label for="star4" title="4 Yıldız">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </label>
+                            <input type="radio" id="star3" name="rating" value="3" />
+                            <label for="star3" title="3 Yıldız">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </label>
+                            <input type="radio" id="star2" name="rating" value="2" />
+                            <label for="star2" title="2 Yıldız">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </label>
+                            <input type="radio" id="star1" name="rating" value="1" />
+                            <label for="star1" title="1 Yıldız">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText" class="form-label" style="display:block; margin-bottom:5px;">Yorumunuz *</label>
+                        <textarea id="reviewText" name="text" class="form-input form-textarea" rows="4" required placeholder="Bize deneyiminizden bahsedin..."></textarea>
+                    </div>
+                    <button type="submit" id="reviewBtn" class="btn btn--primary btn--block">Gönder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/site.js"></script>
+    <script>
+        function openReviewModal() {
+            document.getElementById('reviewModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Hakkımızda Sayfası</h2>
+    </div>
+    <div class="card-body">
+        <form action="/admin/about" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Mevcut Görsel (1:1 Kare veya 3:4 Dikey)</label>
+                    <div class="image-preview-wrapper" style="max-width: 300px;">
+                        <% if (about && about.image) { %>
+                            <img src="<%= about.image %>" alt="Hakkımızda Görsel" class="image-preview" id="previewImg">
+                        <% } else { %>
+                            <img src="" alt="Önizleme yok" class="image-preview" id="previewImg" style="display: none;">
+                            <p class="text-muted" id="noImgText">Görsel bulunmuyor</p>
+                        <% } %>
+                    </div>
+                    
+                    <input type="file" class="form-control mt-sm" id="image" name="image" accept="image/*" onchange="previewFile(this)">
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <label for="text1" class="form-label">1. Paragraf Metni</label>
+                        <textarea class="form-control" id="text1" name="text1" rows="4"><%= about ? about.text1 : '' %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text2" class="form-label">2. Paragraf Metni</label>
+                        <textarea class="form-control" id="text2" name="text2" rows="4"><%= about ? about.text2 : '' %></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-lg" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">Öne Çıkan Özellikler (Maksimum 3)</h3>
+            
+            <div class="features-list">
+                <% for (let i = 0; i < 3; i++) { %>
+                    <% const feature = features && features[i] ? features[i] : { id: '', title: '', description: '', icon: '' }; %>
+                    <div class="card mb-sm" style="background: var(--clr-bg); border-radius: var(--border-radius-sm);">
+                        <div class="card-body" style="padding: var(--sp-sm);">
+                            <input type="hidden" name="feature_ids[]" value="<%= feature.id %>">
+                            <div class="form-row">
+                                <div class="form-group mb-0">
+                                    <label class="form-label">Özellik <%= i + 1 %> Başlık</label>
+                                    <input type="text" class="form-control" name="feature_titles[]" value="<%= feature.title %>">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label class="form-label">Kısa Açıklama</label>
+                                    <input type="text" class="form-control" name="feature_descs[]" value="<%= feature.description %>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="mt-md pt-sm" style="border-top: 1px solid var(--clr-border);">
+                <button type="submit" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Hakkımızda Ayarlarını Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function previewFile(input) {
+    const preview = document.getElementById('previewImg');
+    const noImgText = document.getElementById('noImgText');
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+        preview.src = reader.result;
+        preview.style.display = 'block';
+        if (noImgText) noImgText.style.display = 'none';
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+    }
+}
+</script>

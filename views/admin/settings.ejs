@@ -1,0 +1,138 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Site Ayarları</h2>
+    </div>
+    <div class="card-body">
+        <form action="/admin/settings" method="POST">
+            <h3 class="fw-500 mb-sm" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">Görünüm Ayarları</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="primary_color" class="form-label">Ana Renk (Buton ve Vurgular)</label>
+                    <input type="color" class="form-control" id="primary_color" name="primary_color" value="<%= settings.primary_color || '#c9a96e' %>" style="height: 50px; padding: 4px;">
+                </div>
+                <div class="form-group">
+                    <label for="text_color" class="form-label">Metin Rengi</label>
+                    <input type="color" class="form-control" id="text_color" name="text_color" value="<%= settings.text_color || '#1a1513' %>" style="height: 50px; padding: 4px;">
+                </div>
+                <div class="form-group">
+                    <label for="bg_color" class="form-label">Arka Plan Rengi</label>
+                    <input type="color" class="form-control" id="bg_color" name="bg_color" value="<%= settings.bg_color || '#faf8f5' %>" style="height: 50px; padding: 4px;">
+                </div>
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-md" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">Mağaza Bilgileri</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="site_name" class="form-label">Mağaza Adı</label>
+                    <input type="text" class="form-control" id="site_name" name="site_name" value="<%= settings.site_name || '' %>" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seo_title" class="form-label">SEO Başlık</label>
+                    <input type="text" class="form-control" id="seo_title" name="seo_title" value="<%= settings.seo_title || '' %>">
+                    <small class="form-text">Arama motorlarında (Google) görünecek site başlığı.</small>
+                </div>
+                <div class="form-group">
+                    <label for="seo_description" class="form-label">SEO Açıklama</label>
+                    <textarea class="form-control" id="seo_description" name="seo_description" rows="2"><%= settings.seo_description || '' %></textarea>
+                    <small class="form-text">Arama motorlarında (Google) başlığın altında görünecek kısa açıklama.</small>
+                </div>
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-md" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">İletişim Bilgileri</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone" class="form-label">Birincil Telefon</label>
+                    <input type="text" class="form-control" id="phone" name="phone" value="<%= settings.phone || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="phone2" class="form-label">İkincil Telefon (İsteğe bağlı)</label>
+                    <input type="text" class="form-control" id="phone2" name="phone2" value="<%= settings.phone2 || '' %>">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email" class="form-label">Birincil E-posta</label>
+                    <input type="email" class="form-control" id="email" name="email" value="<%= settings.email || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="email2" class="form-label">İkincil E-posta (İsteğe bağlı)</label>
+                    <input type="email" class="form-control" id="email2" name="email2" value="<%= settings.email2 || '' %>">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address" class="form-label">Açık Adres</label>
+                <textarea class="form-control" id="address" name="address" rows="2"><%= settings.address || '' %></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="hours" class="form-label">Çalışma Saatleri</label>
+                <input type="text" class="form-control" id="hours" name="hours" value="<%= settings.hours || '' %>">
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-md" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">Sosyal Medya</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="instagram" class="form-label">Instagram Kullanıcı Adı / Linki</label>
+                    <input type="text" class="form-control" id="instagram" name="instagram" value="<%= settings.instagram || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="facebook" class="form-label">Facebook Linki</label>
+                    <input type="text" class="form-control" id="facebook" name="facebook" value="<%= settings.facebook || '' %>">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="whatsapp" class="form-label">WhatsApp Numarası</label>
+                    <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="<%= settings.whatsapp || '' %>">
+                    <small class="form-text">Boşluksuz ve ülke koduyla girin (Örn: 905335550123)</small>
+                </div>
+                <div class="form-group">
+                    <label for="pinterest" class="form-label">Pinterest Linki</label>
+                    <input type="text" class="form-control" id="pinterest" name="pinterest" value="<%= settings.pinterest || '' %>">
+                </div>
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-md" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">Mail (SMTP) Ayarları</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="smtp_host" class="form-label">SMTP Sunucusu</label>
+                    <input type="text" class="form-control" id="smtp_host" name="smtp_host" value="<%= settings.smtp_host || '' %>" placeholder="Örn: smtp.gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="smtp_port" class="form-label">SMTP Portu</label>
+                    <input type="number" class="form-control" id="smtp_port" name="smtp_port" value="<%= settings.smtp_port || '' %>" placeholder="Örn: 465 veya 587">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="smtp_user" class="form-label">E-posta Adresi (Kullanıcı Adı)</label>
+                    <input type="text" class="form-control" id="smtp_user" name="smtp_user" value="<%= settings.smtp_user || '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="smtp_pass" class="form-label">E-posta Şifresi (veya Uygulama Şifresi)</label>
+                    <input type="password" class="form-control" id="smtp_pass" name="smtp_pass" value="<%= settings.smtp_pass || '' %>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" name="smtp_secure" value="1" <%= settings.smtp_secure === 'true' ? 'checked' : '' %>>
+                    <span>Güvenli Bağlantı (SSL/TLS - Genellikle 465 portu için gereklidir)</span>
+                </label>
+                <small class="form-text">Randevu bildirimlerinin otomatik gönderilebilmesi için yukarıdaki bilgileri doldurmanız gerekmektedir.</small>
+            </div>
+
+            <div class="mt-md pt-sm" style="border-top: 1px solid var(--clr-border);">
+                <button type="submit" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Ayarları Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

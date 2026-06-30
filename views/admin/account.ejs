@@ -1,0 +1,54 @@
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-header">
+        <h2 class="card-title">Hesap Ayarları (Şifre Değiştir)</h2>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-primary mb-md" style="background: var(--clr-primary-subtle); border: 1px solid rgba(176, 137, 104, 0.2); border-radius: var(--border-radius-sm); padding: 12px; font-size: var(--fs-small);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Yönetici hesabınızın şifresini buradan güncelleyebilirsiniz. Güvenliğiniz için güçlü bir şifre seçin.
+        </div>
+        
+        <form action="/admin/account" method="POST" id="passwordForm">
+            
+            <div class="form-group">
+                <label for="current_password" class="form-label">Mevcut Şifreniz</label>
+                <input type="password" class="form-control" id="current_password" name="current_password" required>
+            </div>
+
+            <div class="form-group mt-lg">
+                <label for="new_password" class="form-label">Yeni Şifre</label>
+                <input type="password" class="form-control" id="new_password" name="new_password" required minlength="6">
+                <small class="form-text">En az 6 karakter uzunluğunda olmalıdır.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password" class="form-label">Yeni Şifre (Tekrar)</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required minlength="6">
+                <div id="passwordError" class="text-danger mt-sm d-none" style="font-size: var(--fs-xs);">Şifreler eşleşmiyor. Lütfen kontrol edin.</div>
+            </div>
+
+            <div class="mt-md pt-sm" style="border-top: 1px solid var(--clr-border);">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                    Şifreyi Güncelle
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('passwordForm').addEventListener('submit', function(e) {
+    const newPass = document.getElementById('new_password').value;
+    const confirmPass = document.getElementById('confirm_password').value;
+    const errorDiv = document.getElementById('passwordError');
+    
+    if (newPass !== confirmPass) {
+        e.preventDefault();
+        errorDiv.classList.remove('d-none');
+        document.getElementById('confirm_password').focus();
+    } else {
+        errorDiv.classList.add('d-none');
+    }
+});
+</script>

@@ -1,0 +1,106 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Ana Sayfa (Hero) Yönetimi</h2>
+    </div>
+    <div class="card-body">
+        <form action="/admin/hero" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-group">
+                <label class="form-label">Mevcut Arka Plan Görseli</label>
+                <div class="image-preview-wrapper" style="max-width: 400px;">
+                    <% if (hero.bg_image) { %>
+                        <img src="<%= hero.bg_image %>" alt="Hero Arka Plan" class="image-preview" id="previewImg">
+                    <% } else { %>
+                        <img src="" alt="Önizleme yok" class="image-preview" id="previewImg" style="display: none;">
+                        <p class="text-muted" id="noImgText">Görsel bulunmuyor</p>
+                    <% } %>
+                </div>
+                
+                <label for="bg_image" class="form-label mt-sm">Yeni Arka Plan Yükle (İsteğe bağlı)</label>
+                <input type="file" class="form-control" id="bg_image" name="bg_image" accept="image/*" onchange="previewFile(this)">
+                <small class="form-text">Sadece resmi değiştirmek istiyorsanız yeni bir dosya seçin. (16:9 yatay format önerilir)</small>
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-lg" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">Ana Başlık ve Metinler</h3>
+            
+            <div class="form-group">
+                <label for="badge_text" class="form-label">Rozet (Badge) Metni</label>
+                <input type="text" class="form-control" id="badge_text" name="badge_text" value="<%= hero.badge_text || '' %>" placeholder="Örn: Premium Gelinlik Butik">
+            </div>
+
+            <div class="form-group">
+                <label for="title" class="form-label">Ana Başlık</label>
+                <textarea class="form-control" id="title" name="title" rows="4"><%= hero.title || '' %></textarea>
+                <small class="form-text">HTML etiketleri kullanabilirsiniz. Alt satıra geçmek için <code>&lt;br&gt;</code> kullanın.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="subtitle" class="form-label">Alt Başlık (Açıklama)</label>
+                <textarea class="form-control" id="subtitle" name="subtitle" rows="3"><%= hero.subtitle || '' %></textarea>
+            </div>
+
+            <h3 class="fw-500 mb-sm mt-lg" style="font-family: var(--font-body); font-size: var(--fs-h4); border-bottom: 1px solid var(--clr-border); padding-bottom: 8px;">İstatistikler (Sağ Alt Köşe)</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="stat1_number" class="form-label">1. İstatistik Sayı (Örn: 2500)</label>
+                    <input type="number" class="form-control" id="stat1_number" name="stat1_number" value="<%= hero.stat1_number || 0 %>">
+                </div>
+                <div class="form-group">
+                    <label for="stat1_label" class="form-label">1. İstatistik Etiket (Örn: Mutlu Gelin)</label>
+                    <input type="text" class="form-control" id="stat1_label" name="stat1_label" value="<%= hero.stat1_label || '' %>">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="stat2_number" class="form-label">2. İstatistik Sayı (Örn: 15)</label>
+                    <input type="number" class="form-control" id="stat2_number" name="stat2_number" value="<%= hero.stat2_number || 0 %>">
+                </div>
+                <div class="form-group">
+                    <label for="stat2_label" class="form-label">2. İstatistik Etiket (Örn: Yıllık Tecrübe)</label>
+                    <input type="text" class="form-control" id="stat2_label" name="stat2_label" value="<%= hero.stat2_label || '' %>">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="stat3_number" class="form-label">3. İstatistik Sayı (Örn: 500)</label>
+                    <input type="number" class="form-control" id="stat3_number" name="stat3_number" value="<%= hero.stat3_number || 0 %>">
+                </div>
+                <div class="form-group">
+                    <label for="stat3_label" class="form-label">3. İstatistik Etiket (Örn: Özel Tasarım)</label>
+                    <input type="text" class="form-control" id="stat3_label" name="stat3_label" value="<%= hero.stat3_label || '' %>">
+                </div>
+            </div>
+
+            <div class="mt-md pt-sm" style="border-top: 1px solid var(--clr-border);">
+                <button type="submit" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Hero Ayarlarını Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function previewFile(input) {
+    const preview = document.getElementById('previewImg');
+    const noImgText = document.getElementById('noImgText');
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
+        preview.src = reader.result;
+        preview.style.display = 'block';
+        if (noImgText) noImgText.style.display = 'none';
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
+    }
+}
+</script>
